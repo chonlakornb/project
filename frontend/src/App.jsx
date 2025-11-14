@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from 'react-router'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import { useState, useEffect} from 'react'
 
 import Layout from './layouts/layout/layout'
@@ -28,9 +28,9 @@ function App() {
             <Route path='/home' element={<Home />} />
             <Route path='/login' element={<Login />} />
           </Route>
-          <Route path='/customer' element={<Customer />}></Route>
-          <Route path='/admin' element={<Admin />}></Route>
-          <Route path='/employee' element={<Employee />}></Route>
+          <Route path='/customer' element={<Customer />} />
+          <Route path='/admin' element={<Admin />} />
+          <Route path='/employee' element={<Employee />} />
         </Routes>
       </HashRouter>
     </div>
