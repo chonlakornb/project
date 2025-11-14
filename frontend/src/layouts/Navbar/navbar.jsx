@@ -39,6 +39,14 @@ export default function Navbar() {
                 >
                     Technician Portal
                 </a>
+
+                <a
+                    className={`global-nav-link ${currentRole === 'user' ? 'global-nav-active' : ''}`}
+                    href="/login?role=user"
+                    onClick={(e) => goToLoginWithRole('user', e)}
+                >
+                    User Portal
+                </a>
             </nav>
         </header>
     );

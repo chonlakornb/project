@@ -24,6 +24,10 @@ export default function Login() {
             navigate('/Employee');
             return;
         }
+        if (role === 'user') {
+            navigate('/customer');
+            return;
+        }
 
         // Otherwise, use email-based routing (default behavior)
         const trimmed = (email || '').trim().toLowerCase();
