@@ -32,18 +32,7 @@ function Home() {
                             Designed for seamless collaboration between administrators and technicians.
                         </p>
                     </div>
-                    
-                    <div className="home-hero-image">
-                        <img
-                            src="/img/ELEV.png"
-                            alt="Elevator Management Illustration"
-                            className="home-hero-img"
-                            onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = 'https://via.placeholder.com/400x300?text=Elevator+Management';
-                            }}
-                        />
-                    </div>
+                
                 </div>
             </section>
 
