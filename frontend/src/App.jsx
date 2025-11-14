@@ -4,6 +4,8 @@ import { useState, useEffect} from 'react'
 import Layout from './layouts/layout/layout'
 import Home from './Pages/home'
 import Login from './Pages/login'
+import MyBuildings from './Pages/MyBuildings'
+import BuildingDetails from './Pages/BuildingDetails'
 import Customer from './Pages/customer'
 import Admin from './Pages/Admin'
 import Employee from './Pages/Employee'
@@ -28,7 +30,8 @@ function App() {
             <Route path='/home' element={<Home />} />
             <Route path='/login' element={<Login />} />
           </Route>
-          <Route path='/customer' element={<Customer />} />
+          <Route path='/customer' element={<MyBuildings />} />
+          <Route path='/building/:id' element={<BuildingDetails />} />
           <Route path='/admin' element={<Admin />} />
           <Route path='/employee' element={<Employee />} />
         </Routes>

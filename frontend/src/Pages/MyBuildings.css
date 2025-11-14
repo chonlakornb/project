@@ -1,0 +1,396 @@
+:root {
+    --ub-bg: #f5f6f7;
+    --ub-card-bg: #ffffff;
+    --ub-text-dark: #0b1220;
+    --ub-text-muted: #6b7280;
+    --ub-blue: #2563eb;
+    --ub-blue-dark: #1e4fcf;
+    --ub-dark: #000000;
+    --ub-green: #10b981;
+    --ub-red: #ef4444;
+    --ub-orange: #f97316;
+    --ub-sky: #0ea5e9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html, #root {
+    height: 100%;
+}
+
+.ub-container {
+    min-height: 100vh;
+    background-color: var(--ub-bg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    color: var(--ub-text-dark);
+}
+
+/* Header */
+.ub-header {
+    background-color: var(--ub-card-bg);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ub-header-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.ub-logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ub-logo-icon {
+    width: 40px;
+    height: 40px;
+    background-color: var(--ub-blue);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.ub-logo-text h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ub-text-dark);
+    margin: 0;
+}
+
+.ub-breadcrumb {
+    font-size: 13px;
+    color: var(--ub-text-muted);
+}
+
+.ub-breadcrumb span {
+    margin: 0 8px;
+}
+
+.ub-header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.ub-notification-bell {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.ub-logout-btn {
+    background-color: var(--ub-dark);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.ub-logout-btn:hover {
+    background-color: #333;
+}
+
+/* Main Content */
+.ub-main {
+    padding: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Stats Section */
+.ub-stats-section {
+    margin-bottom: 40px;
+}
+
+.ub-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.ub-stat-card {
+    background-color: var(--ub-card-bg);
+    padding: 28px 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.ub-stat-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+}
+
+.ub-stat-label {
+    font-size: 13px;
+    color: var(--ub-text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.ub-stat-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ub-blue);
+}
+
+/* Filter Bar */
+.ub-filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    gap: 16px;
+}
+
+.ub-filter-group {
+    display: flex;
+    gap: 12px;
+}
+
+.ub-filter-select {
+    padding: 10px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background-color: var(--ub-card-bg);
+    font-size: 14px;
+    color: var(--ub-text-dark);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.ub-filter-select:hover {
+    border-color: var(--ub-blue);
+}
+
+.ub-filter-select:focus {
+    outline: none;
+    border-color: var(--ub-blue);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.ub-request-technician-btn {
+    background-color: var(--ub-dark);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.ub-request-technician-btn:hover {
+    background-color: #333;
+}
+
+/* Buildings Section */
+.ub-buildings-section {
+    margin-bottom: 40px;
+}
+
+.ub-buildings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.ub-building-card {
+    background-color: var(--ub-card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.ub-building-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+}
+
+.ub-building-header {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.ub-building-icon {
+    font-size: 32px;
+}
+
+.ub-building-title h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ub-text-dark);
+    margin: 0;
+}
+
+.ub-building-location {
+    font-size: 13px;
+    color: var(--ub-text-muted);
+    margin: 4px 0 0;
+}
+
+/* Building Details */
+.ub-building-details {
+    flex: 1;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.ub-detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.ub-detail-row:last-child {
+    margin-bottom: 0;
+}
+
+.ub-detail-label {
+    color: var(--ub-text-muted);
+    font-weight: 600;
+}
+
+.ub-detail-value {
+    color: var(--ub-text-dark);
+    font-weight: 600;
+}
+
+/* Building Footer */
+.ub-building-footer {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.ub-status-badge {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.ub-status-active {
+    background-color: #d1fae5;
+    color: var(--ub-green);
+}
+
+.ub-status-installation {
+    background-color: #bfdbfe;
+    color: var(--ub-sky);
+}
+
+.ub-status-problem {
+    background-color: #fee2e2;
+    color: var(--ub-red);
+}
+
+.ub-status-maintenance {
+    background-color: #fed7aa;
+    color: var(--ub-orange);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .ub-main {
+        padding: 24px;
+    }
+
+    .ub-buildings-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ub-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+        padding: 16px 20px;
+    }
+
+    .ub-header-left {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .ub-filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ub-filter-group {
+        flex-direction: column;
+    }
+
+    .ub-filter-select,
+    .ub-request-technician-btn {
+        width: 100%;
+    }
+
+    .ub-buildings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ub-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .ub-main {
+        padding: 16px;
+    }
+
+    .ub-header {
+        padding: 12px 16px;
+    }
+
+    .ub-stat-card {
+        padding: 20px 16px;
+    }
+
+    .ub-stat-value {
+        font-size: 28px;
+    }
+
+    .ub-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ub-building-card {
+        padding: 16px;
+    }
+}
