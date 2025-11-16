@@ -5,9 +5,10 @@ const User = require('../models/user');
 const Report = require('../models/report');
 const Request = require('../models/request');
 const Building = require('../models/building');
+const authenticateToken = require('../middleware/middleware');
 
 //admin dashboard show all statics
-router.get('/overview', async (req, res) => {
+router.get('/overview', authenticateToken, async (req, res) => {
     try {
         const notifications = await Notification.find();
         const users = await User.countDocuments();
@@ -29,19 +30,48 @@ router.get('/requests', async (req, res) => {
     }
 });
 
-router.put('/request/:id/assign', async (req, res) => {
+//assign employee to request
+router.put('/request/:id/assign', authenticateToken, async (req, res) => {
+
+  if (req.userRole !== 'admin') {
+        return res.status(403).json({ message: 'Only admin can assign work' });
+    }
+
+    const { assignedEmployee } = req.body; 
+    // ต้องส่งเป็น employeeId เช่น: "673ab1239f1234abcd567890"
+
     try {
-        const request = await Request.findById(req.params.id);
-        if (!request) {
+        // 1) ตรวจสอบก่อนว่า employee มีอยู่จริงไหม
+        const employee = await User.findOne({ _id: assignedEmployee, role: 'employee' });
+
+        if (!employee) {
+            return res.status(404).json({ message: 'Employee not found' });
+        }
+
+        // 2) อัปเดต request
+        const updated = await Request.findByIdAndUpdate(
+            req.params.id,
+            {
+                assignedEmployee: employee._id,   // ⬅️ ต้องใช้ id เท่านั้น!!
+                status: 'assigned'
+            },
+            { new: true }
+        );
+
+        if (!updated) {
             return res.status(404).json({ message: 'Request not found' });
         }
-        request.assignedTo = req.body.assignedTo;
-        await request.save();
-        res.json(request);
+
+        res.json({
+            message: 'Work assigned successfully',
+            request: updated
+        });
+
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message });
     }
 });
+
 
 router.get('/reports', async (req, res) => {
     try {
