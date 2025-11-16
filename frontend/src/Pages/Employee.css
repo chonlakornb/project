@@ -1,0 +1,422 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f5f5f5;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+}
+
+.emp-container {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+/* Header */
+.emp-header {
+    background-color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.emp-header-left {
+    display: flex;
+    align-items: center;
+}
+
+.emp-logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.emp-logo-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #2563eb;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.emp-logo-text h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+    margin: 0;
+}
+
+.emp-logo-text p {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+}
+
+.emp-header-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.emp-notification-bell {
+    position: relative;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.emp-notification-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #000;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.emp-logout-btn {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.emp-logout-btn:hover {
+    background-color: #333;
+}
+
+/* Main Content Layout */
+.emp-main-content {
+    display: flex;
+    min-height: calc(100vh - 80px);
+}
+
+.emp-sidebar {
+    width: 200px;
+    background-color: white;
+    padding: 30px 20px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+}
+
+.emp-sidebar p {
+    font-size: 14px;
+    color: #666;
+    font-weight: 600;
+}
+
+.emp-content {
+    flex: 1;
+    padding: 40px;
+}
+
+/* Title Section */
+.emp-title-section h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 30px;
+}
+
+/* Stats Container */
+.emp-stats-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 50px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.emp-stat-card {
+    background-color: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    flex: 1;
+    min-width: 150px;
+    transition: box-shadow 0.3s;
+}
+
+.emp-stat-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.emp-stat-label {
+    font-size: 13px;
+    color: #666;
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.emp-stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.emp-submit-report-btn {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    height: fit-content;
+}
+
+.emp-submit-report-btn:hover {
+    background-color: #333;
+}
+
+/* Tasks Section */
+.emp-tasks-section {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.emp-tasks-header {
+    margin-bottom: 24px;
+}
+
+.emp-tasks-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 8px;
+}
+
+.emp-tasks-header p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Filter Tabs */
+.emp-filter-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 16px;
+}
+
+.emp-filter-tab {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.3s;
+}
+
+.emp-filter-tab:hover {
+    background-color: #e0e0e0;
+}
+
+.emp-filter-tab.emp-active {
+    background-color: #2563eb;
+    color: white;
+}
+
+/* Task Cards */
+.emp-task-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.emp-task-card {
+    background-color: #fafafa;
+    border: 1px solid #e5e5e5;
+    padding: 20px;
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+
+.emp-task-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #d0d0d0;
+}
+
+.emp-task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.emp-task-header h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+}
+
+.emp-task-badges {
+    display: flex;
+    gap: 8px;
+}
+
+.emp-badge {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.emp-priority-high {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.emp-status-in-progress {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+.emp-status-pending {
+    background-color: #e5e7eb;
+    color: #4b5563;
+}
+
+.emp-status-completed {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+.emp-task-description {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.emp-task-details {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.emp-detail-item {
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.emp-task-action {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.emp-action-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s;
+    border: none;
+}
+
+.emp-action-black {
+    background-color: #000;
+    color: white;
+}
+
+.emp-action-black:hover {
+    background-color: #333;
+}
+
+.emp-action-white {
+    background-color: white;
+    color: #000;
+    border: 1px solid #d0d0d0;
+}
+
+.emp-action-white:hover {
+    background-color: #f5f5f5;
+    border-color: #999;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .emp-stats-container {
+        flex-direction: row;
+    }
+
+    .emp-stat-card {
+        flex: 0 1 calc(50% - 10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .emp-header {
+        padding: 15px 20px;
+    }
+
+    .emp-main-content {
+        flex-direction: column;
+    }
+
+    .emp-sidebar {
+        width: 100%;
+        padding: 15px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .emp-content {
+        padding: 20px;
+    }
+
+    .emp-stat-card {
+        flex: 0 1 calc(50% - 10px);
+    }
+
+    .emp-filter-tabs {
+        flex-wrap: wrap;
+    }
+
+    .emp-task-header {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .emp-task-details {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
