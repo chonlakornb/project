@@ -17,6 +17,7 @@ router.get('/users', async (req, res) => {
     }
 });
 
+
 //ดูโปรไฟล์ผู้ใช้ของตนเอง(ต้องloginก่อน )
 router.get('/profile', authenticateToken, async (req, res) => {
     try {
@@ -110,9 +111,8 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
-        const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: '1h' });
-
-        res.json({ message: 'Login successful', token, role: user.role });
+        const token = jwt.sign({ id: user._id, role: user.role }, SECRET_KEY, { expiresIn: '1h' });
+        res.json({ message: 'Login successful', token , 'role': user.role});
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message });
     }
