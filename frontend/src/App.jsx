@@ -9,6 +9,7 @@ import BuildingDetails from './Pages/BuildingDetails'
 import Customer from './Pages/customer'
 import Admin from './Pages/Admin'
 import Employee from './Pages/Employee'
+import Register from './Pages/Register'
 
 import './App.css'
 
@@ -29,6 +30,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/home' element={<Home />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
           </Route>
           <Route path='/customer' element={<MyBuildings />} />
           <Route path='/building/:id' element={<BuildingDetails />} />

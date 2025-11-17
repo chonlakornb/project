@@ -1,0 +1,106 @@
+.reg-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f6f7;
+    padding: 32px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #0b1220;
+}
+
+.reg-card {
+    width: 100%;
+    max-width: 460px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 8px 30px rgba(11,15,26,0.06);
+    border: 1px solid #eef2f6;
+}
+
+.reg-header {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.reg-logo {
+    width: 56px;
+    height: 56px;
+    background: #2563eb;
+    color: #fff;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.reg-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.reg-sub {
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.reg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.reg-label {
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 700;
+}
+
+.reg-input, .reg-select {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #e6eefc;
+    background: #f7f8fa;
+    font-size: 14px;
+    outline: none;
+}
+
+.reg-input:focus, .reg-select:focus {
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.06);
+    border-color: rgba(37,99,235,0.12);
+}
+
+.reg-error {
+    color: #b91c1c;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+.reg-btn {
+    margin-top: 8px;
+    padding: 12px 14px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.reg-footer {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #6b7280;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .reg-card { padding: 18px; }
+}
