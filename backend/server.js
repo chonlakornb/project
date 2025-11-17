@@ -1,7 +1,7 @@
 const port = 3000;
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
+const cors = require('cors');
 
 const mongoose = require('./db');
 
@@ -12,7 +12,20 @@ const ReportRoutes = require('./routes/ReportRoutes');
 const NotificationRoutes = require('./routes/NotificationsRoutes');
 const AdminRoutes = require('./routes/AdminRoutes');
 
-app.use(bodyParser.json());
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173'];
+
+app.use(express.json());
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+        } else {
+        callback(new Error('Not allowed by CORS'));
+        }
+    }
+    };
+app.use(cors(corsOptions));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/buildings', BuildingRoutes);

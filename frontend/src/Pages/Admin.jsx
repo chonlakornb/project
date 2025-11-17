@@ -40,6 +40,15 @@ export default function Admin() {
         return 'status';
     };
 
+    const logOut = () => {
+        const confirmLogout = window.confirm("คุณแน่ใจว่าจะออกจากระบบหรือไม่?");
+        if (confirmLogout) {
+            localStorage.removeItem('authToken');
+            navigate('/login');
+            }
+        
+    };
+
     return (
         <div className="admin-page">
             <header className="admin-header">
@@ -60,7 +69,7 @@ export default function Admin() {
                         className="btn-logout"
                         type="button"
                         aria-label="Logout"
-                        onClick={() => navigate('/login')}
+                        onClick={logOut}
                     >
                         <span className="door" aria-hidden="true">🚪</span>
                         <span>Logout</span>

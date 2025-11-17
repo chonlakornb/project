@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Employee.css';
+import { useNavigate } from 'react-router';
 
 function EmployeePage() {
     const [activeTab, setActiveTab] = useState('All');
@@ -34,6 +35,11 @@ function EmployeePage() {
         return task.status === activeTab;
     });
 
+    const logOut = () => {
+        localStorage.removeItem('authToken');
+        navigate('/');
+    }
+
     return (
         <div className="emp-container">
             {/* Header */}
@@ -52,7 +58,7 @@ function EmployeePage() {
                         🔔
                         <span className="emp-notification-badge">3</span>
                     </div>
-                    <button className="emp-logout-btn">Logout</button>
+                    <button className="emp-logout-btn" >Logout</button>
                 </div>
             </header>
 

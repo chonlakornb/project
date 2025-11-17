@@ -94,7 +94,8 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+    console.log("REQ BODY =", req.body);
+    const { email, password} = req.body;
 
     if (!email || !password) {
         return res.status(400).json({ message: 'Email and password are required' });
@@ -113,6 +114,7 @@ router.post('/login', async (req, res) => {
 
         const token = jwt.sign({ id: user._id, role: user.role }, SECRET_KEY, { expiresIn: '1h' });
         res.json({ message: 'Login successful', token , 'role': user.role});
+        console.log(user.role)
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message });
     }

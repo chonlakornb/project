@@ -11,13 +11,6 @@ function Home() {
         { label: 'Technicians Available', value: '42' }
     ];
 
-    const handleAdminPortal = () => {
-        navigate('/login?role=admin');
-    };
-
-    const handleTechnicianPortal = () => {
-        navigate('/login?role=technician');
-    };
 
     return (
         <div className="home-container">
@@ -25,7 +18,7 @@ function Home() {
             <section className="home-hero">
                 <div className="home-hero-content">
                     <div className="home-hero-text">
-                        <div className="home-hero-icon">⬆</div>
+                        <div className="home-hero-icon"><img src="../src/assets/logo.svg" alt="" /></div>
                         <h1 className="home-hero-title">Your Complete Elevator Management Solution</h1>
                         <p className="home-hero-subtitle">
                             Streamline elevator installation, maintenance, and service requests with LiftMan's integrated platform.
@@ -62,13 +55,11 @@ function Home() {
                     <div className="home-cta-buttons">
                         <button
                             className="home-cta-btn home-cta-btn-primary"
-                            onClick={handleAdminPortal}
                         >
                             Access Admin Portal
                         </button>
                         <button
                             className="home-cta-btn home-cta-btn-secondary"
-                            onClick={handleTechnicianPortal}
                         >
                             Access Technician Portal
                         </button>
@@ -77,16 +68,7 @@ function Home() {
             </section>
 
             {/* Footer */}
-            <footer className="home-footer">
-                <div className="home-footer-content">
-                    <p>&copy; 2024 LiftMan Management System. All rights reserved.</p>
-                    <div className="home-footer-links">
-                        <a href="#contact">Contact</a>
-                        <a href="#privacy">Privacy Policy</a>
-                        <a href="#terms">Terms of Service</a>
-                    </div>
-                </div>
-            </footer>
+            
         </div>
     );
 }

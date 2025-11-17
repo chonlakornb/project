@@ -1,48 +1,58 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './login.css';
 
+
+
 export default function Login() {
     const navigate = useNavigate();
-    const location = useLocation();
-    const params = new URLSearchParams(location.search);
-    const roleParam = params.get('role'); // read ?role=admin or ?role=technician
+
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        // If role is forced from URL (e.g., ?role=admin), use it
-        const role = (roleParam || '').toLowerCase();
-        if (role === 'admin') {
-            navigate('/admin');
-            return;
-        }
-        if (role === 'technician') {
-            navigate('/Employee');
-            return;
-        }
-        if (role === 'user') {
-            navigate('/customer');
-            return;
-        }
+    const loginAPI = () => {
 
-        // Otherwise, use email-based routing (default behavior)
-        const trimmed = (email || '').trim().toLowerCase();
-        if (trimmed === 'admin@example.com') navigate('/admin');
-        else if (trimmed === 'tech@example.com') navigate('/Employee');
-        else if (trimmed === 'user@example.com') navigate('/customer');
-        else navigate('/customer'); // default/fallback
-    }; 
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: password })
+        };
+
+        fetch('http://localhost:3000/api/auth/login', requestOptions)
+            .then(res => {
+                if (!res.ok) throw new Error('Login failed');
+                return res.json();
+            })
+            .then(data => {
+                // สมมุติว่าได้ token กลับมา
+                const token = data.token;
+                localStorage.setItem('authToken', token); // เก็บ token ไว้ใช้เรียก API อื่น
+                alert('Login สําเร็จ! ยินดีต้อนรับสู่ LiftMan');
+                if (data.role === 'admin') {
+                    navigate('/admin');
+                } 
+                if (data.role === 'user') {
+                    navigate('/customer');
+                }
+                if (data.role === 'employee') {
+                    navigate('/employee');
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                alert('Login failed');
+            });
+
+    }
 
     return (
         <div className="login-page">
             <div className="login-card" role="main">
                 <div className="login-top">
                     <div className="login-logo" aria-hidden="true">
-                        <span className="doc">≡</span>
+                        <span className="doc"><img src="../src/assets/logo.svg" alt="" /></span>
                     </div>
                     <h1 className="brand">LiftMan</h1>
                     <p className="subtitle">
@@ -52,13 +62,14 @@ export default function Login() {
                     </p>
                 </div>
 
-                <form className="login-form" onSubmit={handleSubmit}>
+                <form className="login-form" >
+                    
                     <label className="label" htmlFor="email">Email</label>
                     <input
                         id="email"
                         type="email"
                         className="input"
-                        placeholder="user@example.com"
+                        placeholder="Enter your email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -66,7 +77,6 @@ export default function Login() {
 
                     <label className="label" htmlFor="password">Password</label>
                     <input
-                        id="password"
                         type="password"
                         className="input"
                         placeholder="Enter your password"
@@ -75,9 +85,11 @@ export default function Login() {
                         required
                     />
 
-                    <button type="submit" className="btn-submit">
+                    <button className="btn-submit" onClick={loginAPI}>
                         Sign In
                     </button>
+                    <p>You don't have an account? <Link>Sign Up</Link></p>
+                    <p id=''></p>
                 </form>
             </div>
         </div>

@@ -1,52 +1,34 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './navbar.css';
 
-export default function Navbar() {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const params = new URLSearchParams(location.search);
-    const currentRole = (params.get('role') || '').toLowerCase();
+export default function Navbar({tab, setTab}) {
 
-    const goToLoginWithRole = (role, e) => {
-        if (e && e.preventDefault) e.preventDefault();
-        navigate(`/login?role=${encodeURIComponent(role)}`);
-    };
+    
 
     return (
-        <header className="global-nav-container" role="banner">
-            <a className="global-nav-left" href="/" aria-label="LiftMan home">
-                <div className="global-nav-logo-icon">⬆</div>
+        
+        <header className="global-nav-container" >
+            <div className="global-nav-left"  >
+                <div className="global-nav-logo-icon"><img src="./src/assets/logo.svg" alt="" /></div>
                 <div className="global-nav-title">
-                    <span className="global-nav-name">LiftMan</span>
+                    <span className="global-nav-name"><Link to={'/home'}>LiftMan</Link></span>
                     <span className="global-nav-sub">Elevator Management</span>
                 </div>
-            </a>
+            </div>
 
-            <nav className="global-nav-right" role="navigation" aria-label="Main navigation">
-                <a
-                    className={`global-nav-link global-nav-portal ${currentRole === 'admin' ? 'global-nav-active' : ''}`}
-                    href="/login?role=admin"
-                    onClick={(e) => goToLoginWithRole('admin', e)}
+            <nav className="global-nav-right" >
+                <Link to={"/login"}
+                    className={`global-nav-link global-nav-portal`}
                 >
-                    Admin Portal
-                </a>
+                    Login
+                </Link>
 
-                <a
-                    className={`global-nav-link ${currentRole === 'technician' ? 'global-nav-active' : ''}`}
-                    href="/login?role=technician"
-                    onClick={(e) => goToLoginWithRole('technician', e)}
+                <Link
+                    className={`global-nav-link`}
                 >
                     Technician Portal
-                </a>
-
-                <a
-                    className={`global-nav-link ${currentRole === 'user' ? 'global-nav-active' : ''}`}
-                    href="/login?role=user"
-                    onClick={(e) => goToLoginWithRole('user', e)}
-                >
-                    User Portal
-                </a>
+                </Link>
             </nav>
         </header>
     );
