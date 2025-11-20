@@ -9,7 +9,8 @@ const user = require('../models/user');
 //get all building by user id
 router.get('/',authenticateToken, async (req, res) => {
     try {
-        const buildings = await Building.find({ owner: req.userId }).populate('elevator');
+        const buildings = await Building.find({ owner: req.userId })
+        .populate('elevator');
         res.json(buildings);
 
         if (buildings.length === 0) {
@@ -25,7 +26,9 @@ router.get('/',authenticateToken, async (req, res) => {
 //get building by id and details (user can see thier own building and admin can see all building)
 router.get('/:id',authenticateToken, async (req, res) => {
     try {
-        const building = await Building.findById(req.params.id);
+        const building = await Building.findById(req.params.id)
+        .populate('elevator')
+        .populate('owner');
         if (!building) {
             return res.status(404).json({ message: 'Building not found' });
         }

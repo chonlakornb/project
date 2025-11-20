@@ -10,7 +10,7 @@ const authenticateToken = require('../middleware/middleware');
 //admin dashboard show all statics
 router.get('/overview', authenticateToken, async (req, res) => {
     try {
-        const notifications = await Notification.find();
+        const notifications = await Notification.countDocuments();
         const users = await User.countDocuments();
         const technicians = await User.countDocuments({ role: 'employee' });
         const reports = await Report.countDocuments();
@@ -36,11 +36,13 @@ router.get('/buildings', authenticateToken, async (req, res) => {
     }
 });
 
+
 router.get('/requests', async (req, res) => {
     try {
         const requests = await Request.find()
         .populate('user')
-        .populate('building');
+        .populate('building')
+        .populate('assignedEmployee');
         res.json(requests);
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message });
@@ -103,6 +105,19 @@ router.get('/users', async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+router.get('/users/technician', authenticateToken , async (req, res) => {
+    try {
+        if (req.userRole !== 'admin') {
+        return res.status(403).json({ message: 'Not authorized' });
+    }
+        const users = await User.find({ role: 'employee' });
+        res.json(users);
+    
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message });
     }

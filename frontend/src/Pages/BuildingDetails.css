@@ -185,26 +185,15 @@
     white-space: nowrap;
 }
 
-.bd-status-active {
-    background-color: #d1fae5;
-    color: var(--bd-green);
+.bd-status-badge--active {
+    background-color: var(--bd-green);
+    color: white;
 }
 
-.bd-status-installation {
-    background-color: #bfdbfe;
-    color: var(--bd-sky);
+.bd-status-badge--inactive {
+    background-color: var(--bd-red);
+    color: white;
 }
-
-.bd-status-problem {
-    background-color: #fee2e2;
-    color: var(--bd-red);
-}
-
-.bd-status-maintenance {
-    background-color: #fed7aa;
-    color: var(--bd-orange);
-}
-
 /* Actions */
 .bd-actions {
     display: flex;

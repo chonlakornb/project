@@ -28,15 +28,17 @@ export default function Login() {
             .then(data => {
                 // สมมุติว่าได้ token กลับมา
                 const token = data.token;
+                const role = data.role;
                 localStorage.setItem('authToken', token); // เก็บ token ไว้ใช้เรียก API อื่น
+                localStorage.setItem("role", role);
                 alert('Login สําเร็จ! ยินดีต้อนรับสู่ LiftMan');
-                if (data.role === 'admin') {
+                if (role === 'admin') {
                     navigate('/admin');
                 } 
-                if (data.role === 'user') {
+                else if (role === 'user') {
                     navigate('/customer');
                 }
-                if (data.role === 'employee') {
+                else if (role === 'employee') {
                     navigate('/employee');
                 }
             })

@@ -10,6 +10,7 @@ const BuildingRoutes = require('./routes/BuildingRoutes');
 const RequestRoutes = require('./routes/RequestRoutes');
 const ReportRoutes = require('./routes/ReportRoutes');
 const NotificationRoutes = require('./routes/NotificationsRoutes');
+const UserRoutes = require('./routes/UserRoutes');
 const AdminRoutes = require('./routes/AdminRoutes');
 const LiftRoutes = require('./routes/LiftRoutes');
 
@@ -36,6 +37,7 @@ app.use('/api/reports', ReportRoutes);
 app.use('/api/notifications', NotificationRoutes);
 app.use('/api/lifts', LiftRoutes);
 app.use('/api/admin', AdminRoutes);
+app.use('/api/users', UserRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);

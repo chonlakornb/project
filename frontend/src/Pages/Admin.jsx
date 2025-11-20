@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import Popup from "../layouts/Popup/popup";
@@ -7,6 +7,9 @@ export default function Admin() {
   const [overview, setOverview] = useState({});
   const [buildings, setBuildings] = useState([]);
   const [requests, setRequests] = useState([]);
+  const [assignedTech, setAssignedTech] = useState("");
+  const [currentRequestId, setCurrentRequestId] = useState(null);
+  const [technicians, setTechnicians] = useState([]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export default function Admin() {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -69,87 +72,81 @@ export default function Admin() {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    fetch("http://localhost:3000/api/admin/users/technician", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Fetch API failed");
+        return res.json();
+      })
+      .then((data) => {
+        setTechnicians(data);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const navigate = useNavigate();
-
-  const summary = [
-    { value: "5", title: "Total Buildings" },
-    { value: "2", title: "Active Requests" },
-    { value: "1", title: "Ongoing Tasks" },
-    { value: "1", title: "Problems" },
-    { value: "4", title: "Technicians" },
-  ];
-
-  const requestsArray = [
-    {
-      building: "Green Valley Apartments",
-      priority: "Medium",
-      category: "Maintenance",
-      description: "Scheduled quarterly maintenance due",
-      requester: "Lisa Anderson",
-      date: "10/11/2568 14:20:00",
-    },
-  ];
-
-  const buildingsArray = [
-    {
-      name: "Skyline Tower",
-      owner: "Metropolitan Properties",
-      region: "Downtown",
-      type: "Commercial",
-      floors: 45,
-      elevators: 8,
-      status: "Active",
-      maintenance: "12/15/2568",
-    },
-    {
-      name: "Harbor View Residences",
-      owner: "Coastal Living Inc",
-      region: "Waterfront",
-      type: "Residential",
-      floors: 32,
-      elevators: 6,
-      status: "Installation",
-      maintenance: "01/20/2569",
-    },
-    {
-      name: "Tech Hub Complex",
-      owner: "Innovation Partners",
-      region: "Business District",
-      type: "Commercial",
-      floors: 28,
-      elevators: 5,
-      status: "Problem",
-      maintenance: "11/10/2568",
-    },
-    {
-      name: "Green Valley Apartments",
-      owner: "Urban Developments",
-      region: "Suburbs",
-      type: "Residential",
-      floors: 18,
-      elevators: 4,
-      status: "Maintenance",
-      maintenance: "10/25/2568",
-    },
-    {
-      name: "Central Plaza",
-      owner: "Downtown Ventures",
-      region: "Downtown",
-      type: "Mixed-use",
-      floors: 22,
-      elevators: 5,
-      status: "Active",
-      maintenance: "01/05/2569",
-    },
-  ];
 
   const getStatusClass = (status) => {
     if (status === "active") return "status status--green";
     if (status === "inactive") return "status status--red";
     return "status";
   };
+
+  const assignTech = async (e) => {
+  e.preventDefault();
+  if (!assignedTech || !currentRequestId) {
+    alert("Please select a technician");
+    return;
+  }
+
+  const token = localStorage.getItem("authToken");
+
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/admin/request/${currentRequestId}/assign`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ assignedEmployee: assignedTech }),
+      }
+    );
+
+    if (!res.ok) throw new Error("Failed to assign technician");
+
+    const data = await res.json();
+    alert("Technician assigned successfully!");
+    setOpen(false);
+    setAssignedTech("");
+    setCurrentRequestId(null);
+
+    // อัปเดต requests state ให้แสดง assigned technician
+    setRequests((prev) =>
+      prev.map((req) =>
+        req._id === currentRequestId
+          ? { ...req, assignedEmployee: data.assignedEmployee }
+          : req
+      )
+    );
+  } catch (err) {
+    console.error(err);
+    alert("Error assigning technician");
+  }
+};
+
 
   const logOut = () => {
     const confirmLogout = window.confirm("คุณแน่ใจว่าจะออกจากระบบหรือไม่?");
@@ -175,7 +172,7 @@ export default function Admin() {
             <span className="bell" aria-hidden="true">
               🔔
             </span>
-            <span className="notif-badge">5</span>
+            <span className="notif-badge">{overview.notifications}</span>
           </div>
           <button
             className="btn-logout"
@@ -245,6 +242,12 @@ export default function Admin() {
                       {new Date(req.createdAt).toLocaleString()}
                     </span>
                     {/* user.fullname + createdAT */}
+                    <p className="request-tech">
+                      technician assigned:{" "}
+                      {req.assignedEmployee
+                        ? req.assignedEmployee.fullName
+                        : "Not assigned"}
+                    </p>
                   </div>
                 </div>
 
@@ -252,25 +255,34 @@ export default function Admin() {
                   <button
                     className="btn-assign"
                     type="button"
-                    onClick={() => setOpen(true)}
+                    onClick={() => {
+                      setOpen(true), setCurrentRequestId(req._id);
+                    }}
                   >
                     Assign Technician
                   </button>
                   <div>
                     <Popup isOpen={open} onClose={() => setOpen(false)}>
                       <h2>Assign Technician</h2>
-                      <form>
-                        <label htmlFor="technician">
+                      <form onSubmit={assignTech}>
+                        <label>
                           Technician:
-                            {/* <select id="technician" name="technician">
-                                {technicians.map((tech, idx) => (
-                                <option key={idx}>{tech.fullName}</option>
-                                ))}
-                            </select> */}
+                          <select
+                            value={assignedTech}
+                            onChange={(e) => setAssignedTech(e.target.value)}
+                          >
+                            <option value="">-- Select Technician --</option>
+                            {technicians.map((tech) => (
+                              <option key={tech._id} value={tech._id}>
+                                {tech.fullName}
+                              </option>
+                            ))}
+                          </select>
                         </label>
+                        <button type="submit">Assign</button>
                       </form>
                     </Popup>
-                    </div>
+                  </div>
                 </div>
               </article>
             ))}
@@ -344,7 +356,7 @@ export default function Admin() {
                       </td>
                       <td>{b.maintenanceStatus}</td>
                       <td>
-                        <button className="btn-view" type="button">
+                        <button className="btn-view" type="button" onClick={() => navigate(`/customer/building/${b._id}`)}>
                           View Details
                         </button>
                       </td>
