@@ -54,6 +54,14 @@ function BuildingDetails() {
         setTimeout(() => setSaved(false), 3000);
     };
 
+    const handleLogout = () => {
+        const windowConfirm = window.confirm("คุณแน่ใจว่าจะออกจากระบบหรือไม่?");
+        if (windowConfirm) {
+            localStorage.removeItem('authToken');
+            navigate('/login');
+        }
+    }
+
     return (
         <div className="bd-container">
             {/* Header */}
@@ -68,7 +76,7 @@ function BuildingDetails() {
                 </div>
                 <div className="bd-header-right">
                     {saved && <span className="bd-saved-msg">✓ Saved</span>}
-                    <button className="bd-logout-btn">Logout</button>
+                    <button className="bd-logout-btn" onClick={handleLogout}>Logout</button>
                 </div>
             </header>
 

@@ -12,10 +12,25 @@ router.get('/overview', authenticateToken, async (req, res) => {
     try {
         const notifications = await Notification.find();
         const users = await User.countDocuments();
+        const technicians = await User.countDocuments({ role: 'employee' });
         const reports = await Report.countDocuments();
         const requests = await Request.countDocuments();
         const buildings = await Building.countDocuments();
-        res.json({ notifications, users, reports, requests, buildings });
+        res.json({ notifications, users, reports, requests, buildings, technicians });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+router.get('/buildings', authenticateToken, async (req, res) => {
+    try {
+        if (req.userRole !== 'admin') {
+            return res.status(403).json({ message: 'Not authorized' });
+        }
+        const buildings = await Building.find()
+        .populate('elevator')
+        .populate('owner');
+        res.json(buildings);
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message });
     }
@@ -23,7 +38,9 @@ router.get('/overview', authenticateToken, async (req, res) => {
 
 router.get('/requests', async (req, res) => {
     try {
-        const requests = await Request.find();
+        const requests = await Request.find()
+        .populate('user')
+        .populate('building');
         res.json(requests);
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message });

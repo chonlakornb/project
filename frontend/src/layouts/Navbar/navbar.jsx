@@ -24,10 +24,10 @@ export default function Navbar({tab, setTab}) {
                     Login
                 </Link>
 
-                <Link
-                    className={`global-nav-link`}
+                <Link to={'/register'}
+                    className={`global-nav-link global-nav-portal`}
                 >
-                    Technician Portal
+                    Register
                 </Link>
             </nav>
         </header>

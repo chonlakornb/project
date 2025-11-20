@@ -69,6 +69,18 @@ function MyBuildings() {
         navigate(`/building/${buildingId}`);
     };
 
+    const handleLogout = () => {
+            const confirmLogout = window.confirm("คุณแน่ใจว่าจะออกจากระบบ?");
+        if (confirmLogout) {
+            localStorage.removeItem('authToken');
+
+         // delay 1 วินาที ก่อน redirect
+            setTimeout(() => {
+            navigate('/login');
+            }, 1000);
+        }
+    };
+
     return (
         <div className="ub-container">
             {/* ...existing header... */}
@@ -86,7 +98,7 @@ function MyBuildings() {
                 </div>
                 <div className="ub-header-right">
                     <div className="ub-notification-bell">🔔</div>
-                    <button className="ub-logout-btn">Logout</button>
+                    <button className="ub-logout-btn" onClick={handleLogout}>Logout</button>
                 </div>
             </header>
 

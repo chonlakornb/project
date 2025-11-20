@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'employee', 'admin'], 
     default: 'user' 
   },
-  region: { type: String }, // ภูมิภาค เช่น เหนือ, กลาง, ใต้, ตะวันออก
   createdAt: { type: Date, default: Date.now }
 });
 

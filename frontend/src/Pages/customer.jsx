@@ -50,6 +50,11 @@ function CustomerPage() {
         return 'status';
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('authToken');
+        navigate('/login');
+    };
+
     return (
         <div className="page-root">
             <header className="header">
@@ -70,10 +75,10 @@ function CustomerPage() {
                         className="btn-logout"
                         type="button"
                         aria-label="Logout"
-                        onClick={() => navigate('/login')}
+                        onClick={handleLogout}
                     >
                         <span className="door" aria-hidden="true">🚪</span>
-                        <span>Logout</span>
+                        <span>Logout</span> 
                     </button>
                 </div>
             </header>

@@ -11,6 +11,7 @@ const RequestRoutes = require('./routes/RequestRoutes');
 const ReportRoutes = require('./routes/ReportRoutes');
 const NotificationRoutes = require('./routes/NotificationsRoutes');
 const AdminRoutes = require('./routes/AdminRoutes');
+const LiftRoutes = require('./routes/LiftRoutes');
 
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173'];
 
@@ -33,6 +34,7 @@ app.use('/api/requests', RequestRoutes);
 app.use('/api/requests', RequestRoutes);
 app.use('/api/reports', ReportRoutes);
 app.use('/api/notifications', NotificationRoutes);
+app.use('/api/lifts', LiftRoutes);
 app.use('/api/admin', AdminRoutes);
 
 app.listen(port, () => {

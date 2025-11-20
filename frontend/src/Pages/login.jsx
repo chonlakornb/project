@@ -88,7 +88,7 @@ export default function Login() {
                     <button className="btn-submit" onClick={loginAPI}>
                         Sign In
                     </button>
-                    <p>You don't have an account? <Link>Sign Up</Link></p>
+                    <p>You don't have an account? <Link to={'/register'}>Sign Up</Link></p>
                     <p id=''></p>
                 </form>
             </div>

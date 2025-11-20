@@ -101,6 +101,16 @@
     text-align: center;
 }
 
+.region-select {
+    height: 40px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid black;
+    background: #f7f8fa;
+    font-size: 14px;
+    outline: none;
+}
+
 @media (max-width: 480px) {
     .reg-card { padding: 18px; }
 }
