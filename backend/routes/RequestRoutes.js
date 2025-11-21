@@ -27,6 +27,7 @@ router.post('/', authenticateToken, async (req, res) => {
         await newRequest.save();
         res.status(201).json({ message: 'Request created successfully', request: newRequest });
     } catch (err) {
+        console.log("🔥 ERROR:", err);
         res.status(500).json({ message: 'Server error', error: err.message });
     }
 });

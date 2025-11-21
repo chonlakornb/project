@@ -13,9 +13,15 @@ function CustomerPage() {
   const [selectedBuilding, setSelectedBuilding] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [requestType, setRequestType] = useState("");
+  const [requestType, setRequestType] = useState("installation");
   const [requests, setRequests] = useState([]);
   const [open, setOpen] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
+  const [bName, setBName] = useState("");
+  const [bAddress, setBAddress] = useState("");
+  const [bRegion, setBRegion] = useState("");
+  const [bType, setBType] = useState("");
+  const [bFloor, setBFloor] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -62,6 +68,12 @@ function CustomerPage() {
   const submitRequest = async (e) => {
     e.preventDefault();
 
+    // Validate required fields
+    if (!selectedBuilding || !requestType || !title || !description) {
+        alert("Please fill in all required fields");
+        return;
+    }
+
     try {
         const token = localStorage.getItem('authToken');
 
@@ -73,9 +85,9 @@ function CustomerPage() {
             },
             body: JSON.stringify({
                 building: selectedBuilding,
-                requestType,
-                title,
-                description
+                requestType: requestType,
+                title: title,
+                description: description
             })
         });
 
@@ -85,10 +97,7 @@ function CustomerPage() {
         }
 
         const data = await res.json();
-
-        // Add to array instead of replace
         setRequests(prev => [...prev, data]);
-
         alert("Request submitted successfully!");
 
         // Reset form
@@ -96,14 +105,59 @@ function CustomerPage() {
         setRequestType("installation");
         setTitle("");
         setDescription("");
-
-        // Close popup
         setOpen(false);
+        setTimeout(() => {
+            window.location.reload(); // รีโหลดหน้า
+        }, 1000);
 
     } catch (error) {
         console.error("Error while submitting request:", error);
+        alert("Error submitting request: " + error.message);
     }
 };
+
+const submitAddBuilding = async (e) => {
+    e.preventDefault();
+    if (!bName || !bAddress) {
+      alert("Please fill in required fields");
+      return;
+    }
+    try {
+      const token = localStorage.getItem("authToken");
+     const res = await fetch("http://localhost:3000/api/buildings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: bName,
+          address: bAddress,
+          region: bRegion,
+          type: bType,
+          floor: bFloor,
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "Create building failed");
+      }
+      const data = await res.json();
+      // backend returns { message, building }
+      const created = data.building || data;
+      setBuildings((prev) => [...prev, created]);
+      alert("Building created successfully");
+      setAddOpen(false);
+      setBName("");
+      setBAddress("");
+      setBRegion("");
+      setBType("");
+      setBFloor("");
+    } catch (err) {
+      console.error(err);
+      alert("Error creating building: " + err.message);
+    }
+  };
 
 
   const statusClass = (s) => {
@@ -117,6 +171,7 @@ function CustomerPage() {
     const confirmLogout = window.confirm("คุณแน่ใจว่าจะออกจากระบบหรือไม่?");
     if (confirmLogout) {
       localStorage.removeItem("authToken");
+      localStorage.removeItem("role");
       navigate("/login");
     }
   };
@@ -187,6 +242,52 @@ function CustomerPage() {
           </div>
 
           <div className="filters-right">
+            <button className="btn-primary" type="button" onClick={() => setAddOpen(true)}>
+              Add building
+            </button>
+            <Popup isOpen={addOpen} onClose={() => setAddOpen(false)}>
+              <form onSubmit={submitAddBuilding}>
+                <div>
+                  <h2>Add Building</h2>
+                  <p>Name</p>
+                  <input
+                    type="text"
+                    value={bName}
+                    onChange={(e) => setBName(e.target.value)}
+                  />
+                  <p>Address</p>
+                  <input
+                    type="text"
+                    value={bAddress}
+                    onChange={(e) => setBAddress(e.target.value)}
+                  />
+                  <p>Region</p>
+                  <input
+                    type="text"
+                    value={bRegion}
+                    onChange={(e) => setBRegion(e.target.value)}
+                  />
+                  <p>Type</p>
+                  <input
+                    type="text"
+                    value={bType}
+                    onChange={(e) => setBType(e.target.value)}
+                  />
+                  <p>Floors</p>
+                  <input
+                    type="number"
+                    value={bFloor}
+                    onChange={(e) => setBFloor(e.target.value)}
+                  />
+                  <div style={{ marginTop: 12 }}>
+                    <button type="submit">Create</button>
+                    <button type="button" onClick={() => setAddOpen(false)}>
+                      Cancel
+</button>
+                  </div>
+                </div>
+              </form>
+            </Popup>
             <button
               className="btn-primary"
               type="button"

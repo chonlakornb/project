@@ -12,6 +12,11 @@ export default function Admin() {
   const [technicians, setTechnicians] = useState([]);
   const [open, setOpen] = useState(false);
 
+    // state for Change Status popup
+  const [statusOpen, setStatusOpen] = useState(false);
+  const [statusValue, setStatusValue] = useState("");
+  const [statusRequestId, setStatusRequestId] = useState(null); 
+
   useEffect(() => {
     const token = localStorage.getItem("authToken");
 
@@ -146,6 +151,40 @@ export default function Admin() {
     alert("Error assigning technician");
   }
 };
+
+const changeStatusSubmit = async (e) => {
+    e.preventDefault();
+    if (!statusRequestId) return;
+    const token = localStorage.getItem("authToken");
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/requests/${statusRequestId}/status`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ status: statusValue }),
+        }      
+      );
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "Failed to update status");
+      }
+      // update local state
+      setRequests((prev) =>
+        prev.map((r) => (r._id === statusRequestId ? { ...r, status: statusValue } : r))
+      );
+      setStatusOpen(false);
+      setStatusRequestId(null);
+      setStatusValue("");
+      alert("Status updated");
+    } catch (err) {
+      console.error(err);
+      alert("Error updating status: " + err.message);
+    }
+  };
 
 
   const logOut = () => {
@@ -283,6 +322,35 @@ export default function Admin() {
                       </form>
                     </Popup>
                   </div>
+                  <button
+                    className="btn-change"
+                    type="button"
+                    onClick={() => {
+                      setStatusOpen(true);
+                      setStatusRequestId(req._id);
+                      setStatusValue(req.status || "pending");
+                    }}
+                  >
+                    Change Status
+                  </button>
+                  <Popup isOpen={statusOpen} onClose={() => setStatusOpen(false)}>
+                    <h2>Change Request Status</h2>
+                    <form onSubmit={changeStatusSubmit}>                      <label>
+                        Status:
+                        <select value={statusValue} onChange={(e) => setStatusValue(e.target.value)}>
+                          <option value="pending">pending</option>                          <option value="assigned">assigned</option>                          <option value="in_progress">in_progress</option>
+                          <option value="completed">completed</option>
+                          <option value="cancelled">cancelled</option>
+                        </select>
+                      </label>
+                      <div style={{ marginTop: 12 }}>
+                        <button type="submit">Update</button>
+                        <button type="button" onClick={() => setStatusOpen(false)}>
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  </Popup>
                 </div>
               </article>
             ))}

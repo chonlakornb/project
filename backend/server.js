@@ -12,6 +12,7 @@ const ReportRoutes = require('./routes/ReportRoutes');
 const NotificationRoutes = require('./routes/NotificationsRoutes');
 const UserRoutes = require('./routes/UserRoutes');
 const AdminRoutes = require('./routes/AdminRoutes');
+const EmployeeRoutes = require('./routes/EmployeeRoutes');
 const LiftRoutes = require('./routes/LiftRoutes');
 
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173'];
@@ -38,6 +39,7 @@ app.use('/api/notifications', NotificationRoutes);
 app.use('/api/lifts', LiftRoutes);
 app.use('/api/admin', AdminRoutes);
 app.use('/api/users', UserRoutes);
+app.use('/api/employees', EmployeeRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
