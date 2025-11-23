@@ -214,7 +214,7 @@ function BuildingDetails() {
                 <input
                   type="text"
                   value={buildingsData.region ?? ""}
-                  onChange={(e) => handleChange("location", e.target.value)}
+                  onChange={(e) => handleChange("region", e.target.value)}
                   disabled={!isEditing}
                   className="bd-input"
                 />
