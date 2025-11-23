@@ -15,19 +15,19 @@ const AdminRoutes = require('./routes/AdminRoutes');
 const EmployeeRoutes = require('./routes/EmployeeRoutes');
 const LiftRoutes = require('./routes/LiftRoutes');
 
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173'];
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5500'];
 
 app.use(express.json());
 
 const corsOptions = {
     origin: (origin, callback) => {
-        if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
         } else {
-        callback(new Error('Not allowed by CORS'));
+            callback(new Error('Not allowed by CORS'));
         }
     }
-    };
+};
 app.use(cors(corsOptions));
 
 app.use('/api/auth', authRoutes);
@@ -41,6 +41,10 @@ app.use('/api/admin', AdminRoutes);
 app.use('/api/users', UserRoutes);
 app.use('/api/employees', EmployeeRoutes);
 
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-});
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`Server running on http://localhost:${port}`);
+    });
+}
+
+module.exports = app;

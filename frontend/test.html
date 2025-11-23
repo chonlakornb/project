@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Frontend Chai Browser Tests</title>
+  <link rel="stylesheet" href="public/mocha.css">
+</head>
+<body>
+  <div id="mocha"></div>
+  <script src="https://cdn.jsdelivr.net/npm/mocha@10.2.0/mocha.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chai@4.3.7/chai.min.js"></script>
+  <script>
+    mocha.setup('bdd');
+    const expect = chai.expect;
+
+    describe('Frontend Sanity', function() {
+      it('should load the homepage', function(done) {
+        fetch('index.html')
+          .then(res => {
+            expect(res.status).to.be.oneOf([200, 304]);
+            done();
+          })
+          .catch(done);
+      });
+    });
+
+    // Backend API browser tests (requires backend running and CORS enabled)
+    describe('Backend API', function() {
+      it('should get 401 or 403 for /api/buildings (unauthenticated)', function(done) {
+        fetch('http://localhost:3000/api/buildings')
+          .then(res => {
+            expect([401, 403]).to.include(res.status);
+            done();
+          })
+          .catch(done);
+      });
+
+      it('should get 401 or 403 for /api/auth/profile (unauthenticated)', function(done) {
+        fetch('http://localhost:3000/api/auth/profile')
+          .then(res => {
+            expect([401, 403]).to.include(res.status);
+            done();
+          })
+          .catch(done);
+      });
+
+      it('should get 200 for /api/requests (public)', function(done) {
+        fetch('http://localhost:3000/api/requests')
+          .then(res => {
+            expect(res.status).to.equal(200);
+            done();
+          })
+          .catch(done);
+      });
+    });
+
+    describe('Array', function() {
+      it('should return -1 when value is not present', function() {
+        expect([1,2,3].indexOf(4)).to.equal(-1);
+      });
+    });
+
+    // Example: Test a React component (pseudo)
+    // describe('App Component', function() {
+    //   it('should render without crashing', function() {
+    //     // You can use document.querySelector or other DOM checks here
+    //     expect(document.getElementById('root')).to.exist;
+    //   });
+    // });
+
+    // Add more frontend tests here as needed
+
+    mocha.run();
+  </script>
+</body>
+</html>
