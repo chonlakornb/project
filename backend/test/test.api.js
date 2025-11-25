@@ -1,5 +1,24 @@
+// Quick test/run instructions:
+// 1) Install dev deps: npm install --save-dev mocha chai supertest
+// 2) Add package.json script: "test": "mocha --recursive --timeout 5000 --exit"
+// 3) Ensure your server file exports the Express app (module.exports = app).
+//    If the server starts listening on import, either export the app instead
+//    or start the server separately before running `npm test`.
+// 4) Run tests: npm test
+// 5) For browser tests, serve the HTML from the same origin or enable CORS.
+
 const request = require('supertest');
-const app = require('../server');
+let app;
+try {
+  // Try to require the server. For supertest to work, ../server should export
+  // the Express `app` or an http.Server. If your server auto-listens on import,
+  // consider changing it to export the app instead of calling app.listen().
+  app = require('../server');
+} catch (err) {
+  console.error('Error requiring ../server for tests. Ensure server exports the Express app (module.exports = app) or the http.Server instance.');
+  console.error('Original error:', err && err.message ? err.message : err);
+  throw err;
+}
 const chai = require('chai');
 const expect = chai.expect;
 

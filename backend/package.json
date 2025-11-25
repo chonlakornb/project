@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --recursive --timeout 5000 --exit --ignore \"test/browser-tests.js\" --ignore \"test/browser-test.html\"",
     "start": "node server.js"
   },
   "keywords": [],
